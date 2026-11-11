@@ -1,0 +1,23 @@
+# build context（リポジトリのルート）からイメージのビルドに送らないもの。
+
+# 依存とビルド成果物（イメージの中で作り直す）
+**/node_modules
+**/dist
+**/.cloudflare
+**/.wrangler
+**/.tanstack
+**/styled-system
+**/routeTree.gen.ts
+
+# シークレット
+**/.env
+**/.env.*
+**/.dev.vars
+
+# ビルドに要らないもの
+.git
+**/.gitignore
+Dockerfile
+**/*.md
+.dockerignore
+.github

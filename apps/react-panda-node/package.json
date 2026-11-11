@@ -1,0 +1,48 @@
+{
+  "name": "react-panda-node",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "panda codegen",
+    "dev": "vp dev --host --port 8787",
+    "build": "vp build --mode client && vp build",
+    "start": "node dist/index.js",
+    "check": "vp check --fix",
+    "takibi": "hono-takibi",
+    "docker:build": "docker build -f ../../Dockerfile --build-arg APP=react-panda-node --build-arg GIT_REVISION=$(git rev-parse HEAD) --build-arg BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) --sbom=true --provenance=mode=max -t react-panda-node:latest -t react-panda-node:$(git rev-parse --short HEAD) ../..",
+    "docker:start": "docker run --rm --name react-panda-node --read-only --cap-drop ALL --security-opt no-new-privileges --memory 512m --pids-limit 256 -p 127.0.0.1:8787:8787 react-panda-node",
+    "docker:clean": "docker rm -f react-panda-node && docker images -q react-panda-node | sort -u | xargs -r docker image rm -f",
+    "docker:scan": "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --quiet --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 react-panda-node:latest"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.6",
+    "@hono/zod-openapi": "^1.6.3",
+    "effect": "^4.1.2",
+    "hono": "^4.13.17",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@hono/vite-build": "^1.11.1",
+    "@hono/vite-dev-server": "^0.26.1",
+    "@pandacss/dev": "^2.5.0",
+    "@pandacss/preset-base": "^2.5.0",
+    "@pandacss/preset-panda": "^2.5.0",
+    "@tanstack/react-query": "^5.107.1",
+    "@tanstack/react-query-devtools": "^5.107.1",
+    "@tanstack/react-router": "^1.170.46",
+    "@tanstack/react-router-devtools": "^1.167.3",
+    "@tanstack/router-plugin": "^1.169.0",
+    "@types/node": "catalog:",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typespec/http": "catalog:",
+    "@typespec/openapi": "catalog:",
+    "@typespec/openapi3": "^1.17.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "hono-takibi": "^0.30.0",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

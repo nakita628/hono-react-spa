@@ -1,0 +1,7 @@
+# Dockerfile のベースイメージ（タグと digest）を新しい版に更新する PR を、週に 1 回出す。
+version: 2
+updates:
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly

@@ -1,0 +1,29 @@
+packages:
+  - apps/*
+
+# 複数のアプリで使う依存は、ここで 1 回だけバージョンを決める（package.json では `catalog:` と書く）。
+catalog:
+  '@types/node': 24.19.2
+  '@typespec/compiler': 1.17.0
+  '@typespec/http': 1.17.0
+  '@typespec/openapi': 1.17.0
+  typescript: 7.0.2
+  vite-plus: 1.5.1
+
+# plugin（@tanstack/router-plugin など）が見る `vite` を Vite+ の本体にそろえる。
+# そろえないと plugin の型が vite-plus の defineConfig と合わず、vp check が落ちる。
+overrides:
+  vite: npm:@voidzero-dev/vite-plus-core@1.5.1
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+  # react-panda だけ。配布済みのバイナリを使うので build は不要。
+  '@parcel/watcher': false
+
+minimumReleaseAge: 1440
+
+# storeDir on native fs avoids virtiofs ESTALE (-116); childConcurrency serializes builds against OOM.
+storeDir: /home/node/.pnpm-store-native
+childConcurrency: 1
