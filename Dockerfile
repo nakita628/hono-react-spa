@@ -39,7 +39,7 @@ RUN pnpm --filter "${APP}" build
 # runtime: Node だけが入った distroless（シェルもパッケージマネージャーも無い）で動かす
 # サーバーは依存をすべてバンドル済みなので、コピーするのは dist だけ（node_modules は要らない）。
 # ---------------------------------------------------------------------------
-FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:088a01637f22908632ba09018be2e0b516f2fa6f7869c191d29491139db43c78 AS runtime
+FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:6abfcb367ebc291572c774c1592a986be2ab26a2486f73093401327495a5962a AS runtime
 ARG APP
 # 待ち受けるポートは環境変数で変えられる（`docker run -e PORT=3000 -p 3000:3000`）。
 ENV NODE_ENV=production \
